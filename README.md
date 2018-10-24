@@ -1,4 +1,4 @@
 # authorization
-File API
-SHA256
+File API <br>
+SHA256 <br>
 integrity
