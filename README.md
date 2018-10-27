@@ -1,4 +1,6 @@
 # authorization
-File API <br>
-SHA256 <br>
-integrity
+<ul>
+    <li>File API</li>
+    <li>SHA256(integrity)</li>
+    <li>localStorage</li>
+</ul>
