@@ -2,6 +2,9 @@ body {
     margin: 0;
     padding: 0;
     background-color: #08AEEA;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(13%, #08AEEA), to(#2AF598));
+    background-image: -webkit-linear-gradient(bottom, #08AEEA 13%, #2AF598 100%);
+    background-image: -o-linear-gradient(bottom, #08AEEA 13%, #2AF598 100%);
     background-image: linear-gradient(0deg, #08AEEA 13%, #2AF598 100%);
     height: 800px;
 
@@ -25,7 +28,8 @@ body {
 .user-mail,
 .user_pass {
     display: block;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     margin: 40px;
     border: none;
     width: 324px;
@@ -68,16 +72,34 @@ body {
     border-radius: 0 14px 14px 0;
 }
 
+@-webkit-keyframes shakeError {
+    0%, 100% { -webkit-transform: translateX(0); transform: translateX(0) }
+    10%, 30%, 50%, 70%, 90% { -webkit-transform: translateX(-10px); transform: translateX(-10px) }
+    20%, 40%, 60% { -webkit-transform: translateX(10px); transform: translateX(10px) }
+}
+
 @keyframes shakeError {
-    0%, 100% { transform: translateX(0) }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px) }
-    20%, 40%, 60% { transform: translateX(10px) }
+    0%, 100% { -webkit-transform: translateX(0); transform: translateX(0) }
+    10%, 30%, 50%, 70%, 90% { -webkit-transform: translateX(-10px); transform: translateX(-10px) }
+    20%, 40%, 60% { -webkit-transform: translateX(10px); transform: translateX(10px) }
 }
 
 .error-auth-animation {
     background-color: rgb(223, 66, 66);
-    animation-name: shakeError;
-    animation-duration: .7s;
+    -webkit-animation-name: shakeError;
+            animation-name: shakeError;
+    -webkit-animation-duration: .7s;
+            animation-duration: .7s;
+}
+
+
+@-webkit-keyframes successful {
+    0% {}
+    100% {
+        margin-top: 80px;
+        width: 726px;
+        height: 596px;
+    }
 }
 
 
@@ -90,15 +112,20 @@ body {
     }
 }
 .auth-true {
-    animation: successful .6s ease forwards;
+    -webkit-animation: successful .6s ease forwards;
+            animation: successful .6s ease forwards;
 }
 
 
 
                 /* home page */
 .cont_1 {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-grow: 1;
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
     /* align-items: flex-start; */
 }
 
@@ -110,13 +137,20 @@ body {
 }
 
 .img-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-around;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
 }
 
 .avatars-wrap {
-    flex-grow: 1;
-    align-self: center;
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
 }
 
 .preview-img {
@@ -157,7 +191,8 @@ label {
 }
 
 .next-page--container {
-    animation: successful .6s ease forwards;
+    -webkit-animation: successful .6s ease forwards;
+            animation: successful .6s ease forwards;
 }
 
 .back-btn {
