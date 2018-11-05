@@ -69,6 +69,7 @@ var nextPage = user => {
     var backBtn = cont.appendChild(document.createElement('button'))
         backBtn.textContent = 'back'
         backBtn.classList.add('back-btn')
+    var chatBtn = cont.appendChild(document.createElement('button'))
 
     backBtn.onclick = function(event) {
         deleteChild(cont)
@@ -119,8 +120,6 @@ function homePage(hash) {
     cont.appendChild(firsContainer)
     var mainImg = firsContainer.appendChild(document.createElement('img'))
     mainImg.classList.add('home-img')
-    // mainImg.width = 244
-    // mainImg.height = 250
     
     if(!mainImg.src) mainImg.src = 'img/default-image.png'
 
@@ -140,7 +139,7 @@ function homePage(hash) {
         var obj = JSON.parse(localStorage[user])
         mainImg.src = obj.url
     } else {
-        var newObject = { lastPage: 'home-page' }
+        var newObject = { lastPage: 'home-page', url: 'img/default-image.png' }
         localStorage.setItem(user, JSON.stringify(newObject))
     }
 
@@ -165,23 +164,51 @@ function homePage(hash) {
     info_1.textContent = 'Press "Esc" to exit!'
     info_1.style.textAlign = 'center'
     var userObj = JSON.parse(localStorage[user])
-    info_2.textContent = userObj.lastVisit
+
+    if (!userObj.lastVisit) {
+        info_2.textContent = 'Last visit: now'
+    } else {
+        info_2.textContent = `Last visit: ${userObj.lastVisit}`
+    }
+
     info_2.style.textAlign = 'center'
     var nextBtn = cont.appendChild(document.createElement('button'))
         nextBtn.textContent = 'next'
         nextBtn.classList.add('next-btn')
     //////////////
         //exit
-    window.onkeydown = function (event) {
-        if (event.keyCode === 27) {
-            event.preventDefault()
+    // window.onkeydown = function (event) {
+    //     if (event.keyCode === 27) {
+    //         event.preventDefault()
+    //         if () {
+
+    //         }
+    //         var obj = JSON.parse(localStorage[user])
+    //         obj.lastVisit = new Date().toLocaleTimeString().substr(0, 5)
+    //         localStorage.setItem(user, JSON.stringify(obj))
+    //         cont.parentNode.removeChild(cont)
+    //         firstModal()
+    //     }
+    // }
+
+    var exitFunction = event => {
+        if (document.querySelector('.container')) {
             var obj = JSON.parse(localStorage[user])
-            obj.lastVisit = new Date().toLocaleTimeString()
+            obj.lastVisit = new Date().toLocaleTimeString().substr(0, 5)
             localStorage.setItem(user, JSON.stringify(obj))
             cont.parentNode.removeChild(cont)
             firstModal()
         }
     }
+
+    cont.addEventListener('exit', exitFunction)
+
+    window.addEventListener('keydown', event => {
+        if (event.keyCode === 27) {
+            cont.dispatchEvent(new CustomEvent('exit'))
+        }
+    })
+
 
     // next page
     nextBtn.onclick = function(event) {
@@ -189,6 +216,12 @@ function homePage(hash) {
         nextPage(user)
     }
 }
+
+
+
+
+
+
 
 var userAuth = objHash => {
     if (!localStorage.length) {
@@ -209,16 +242,23 @@ var userAuth = objHash => {
         }
     }
 
-    // arr.indexOf(Sha256.hash(objHash)) == -1 ? incorrectAuth('No such user!') : homePage(Sha256.hash(objHash))
     arr.indexOf(Sha256.hash(objHash)) == -1 ? incorrectAuth('No such user!') : openLastPage()
 }
 
+
+
+
+
+
 function firstModal() {
-    var sha_js = document.createElement('script')
-        sha_js.src = 'https://cdn.rawgit.com/chrisveness/crypto/4e93a4d/sha256.js'
-        sha_js.integrity = 'sha384-KRBAf263if8ArQhh23bChqfR8z1cSWrQ3rtnPaSgD3C2uhv8k2hBV0nhcpLZAH3o'
-        sha_js.crossOrigin = 'anonymous'
-    document.head.appendChild(sha_js)
+    if (!(document.querySelector('#sha-script'))) { // если нет, вернет null
+        var sha_js = document.createElement('script')
+            sha_js.src = 'https://cdn.rawgit.com/chrisveness/crypto/4e93a4d/sha256.js'
+            sha_js.integrity = 'sha384-KRBAf263if8ArQhh23bChqfR8z1cSWrQ3rtnPaSgD3C2uhv8k2hBV0nhcpLZAH3o'
+            sha_js.crossOrigin = 'anonymous'
+            sha_js.id = 'sha-script'
+        document.head.appendChild(sha_js)
+    }
 
     var cont = document.body.appendChild(document.createElement('div'))
     cont.classList.add('container')
