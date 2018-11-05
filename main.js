@@ -47,6 +47,7 @@ var nextPage = user => {
 
     var cont = document.querySelector('.container')
         cont.classList.add('next-page--container')
+        cont.classList.add('auth-true')
     function deleteChild(node) {
         var child
         while (child = node.lastChild) {
@@ -66,10 +67,18 @@ var nextPage = user => {
     var img = cont.appendChild(document.createElement('img'))
         img.width = 444
         img.classList.add('next-img')
-    var backBtn = cont.appendChild(document.createElement('button'))
+
+    var nextPageBtnContainer = cont.appendChild(document.createElement('div'))
+        nextPageBtnContainer.classList.add('nxt-btn-cont')
+
+    var backBtn = nextPageBtnContainer.appendChild(document.createElement('button'))
         backBtn.textContent = 'back'
         backBtn.classList.add('back-btn')
-    var chatBtn = cont.appendChild(document.createElement('button'))
+
+
+    var chatBtn = nextPageBtnContainer.appendChild(document.createElement('button'))
+        chatBtn.textContent = 'Chat'
+        chatBtn.classList.add('chat-btn')
 
     backBtn.onclick = function(event) {
         deleteChild(cont)
@@ -176,38 +185,23 @@ function homePage(hash) {
         nextBtn.textContent = 'next'
         nextBtn.classList.add('next-btn')
     //////////////
+
         //exit
-    // window.onkeydown = function (event) {
-    //     if (event.keyCode === 27) {
-    //         event.preventDefault()
-    //         if () {
-
-    //         }
-    //         var obj = JSON.parse(localStorage[user])
-    //         obj.lastVisit = new Date().toLocaleTimeString().substr(0, 5)
-    //         localStorage.setItem(user, JSON.stringify(obj))
-    //         cont.parentNode.removeChild(cont)
-    //         firstModal()
-    //     }
-    // }
-
-    var exitFunction = event => {
-        if (document.querySelector('.container')) {
-            var obj = JSON.parse(localStorage[user])
-            obj.lastVisit = new Date().toLocaleTimeString().substr(0, 5)
-            localStorage.setItem(user, JSON.stringify(obj))
-            cont.parentNode.removeChild(cont)
-            firstModal()
+    window.onkeydown = function(event) {
+        if (event.keyCode === 27) {
+            if (document.querySelector('.auth-true')) {
+                var page = document.querySelector('.container')
+                var obj = JSON.parse(localStorage[user])
+                obj.lastVisit = new Date().getHours() + ':' + new Date().getMinutes()
+                localStorage.setItem(user, JSON.stringify(obj))
+    
+                // clearListener()
+    
+                page.parentNode.removeChild(page)
+                firstModal()
+            }
         }
     }
-
-    cont.addEventListener('exit', exitFunction)
-
-    window.addEventListener('keydown', event => {
-        if (event.keyCode === 27) {
-            cont.dispatchEvent(new CustomEvent('exit'))
-        }
-    })
 
 
     // next page
